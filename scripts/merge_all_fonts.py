@@ -9,8 +9,9 @@ import subprocess
 from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).parent
-FONT_DIR = SCRIPT_DIR / "src_fonts"
-OUTPUT_DIR = SCRIPT_DIR / "output"
+PROJECT_ROOT = SCRIPT_DIR.parent
+FONT_DIR = PROJECT_ROOT / "src_fonts"
+OUTPUT_DIR = PROJECT_ROOT
 
 TEKTUR_FONT = FONT_DIR / "tektur-ksm/Tektur-KSM-Medium.ttf"
 CORPORATE_LOGO_FONT = FONT_DIR / "corporate-logo/Corporate-Logo-Medium-ver3.otf"
