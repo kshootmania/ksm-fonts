@@ -2,11 +2,11 @@
 
 K-Shoot MANIA v2用のシステムフォント「KSM-System」とフォント統合用スクリプトです。
 
-以下の3つのフォントを統合して作成されています。
+以下の3つのフォントを統合したフォントです。
 
-- Tektur(改変版): 英数字・記号
-- コーポレートロゴ ver3: 日本語
-- Noto Sans CJK: それ以外のグリフ
+- **英数字・記号**: Tektur(改変版)
+- **日本語**: コーポレート・ロゴ ver3／源ノ角ゴシック
+- **それ以外のグリフ**: Noto Sans CJK
 
 ## フォント
 
@@ -19,15 +19,9 @@ K-Shoot MANIA v2用のシステムフォント「KSM-System」とフォント統
 
 ## ライセンス
 
-すべてのフォントは SIL Open Font License, Version 1.1 でライセンスされています。
+本フォントおよび全ての構成フォントは SIL Open Font License, Version 1.1 でライセンスされています。
 
-各フォントの詳細なライセンス情報は、対応する `LICENSE-*.txt` ファイルをご確認ください:
-- LICENSE-KSM-JA-Medium.txt
-- LICENSE-KSM-KR-Medium.txt
-- LICENSE-KSM-SC-Medium.txt
-- LICENSE-KSM-TC-Medium.txt
-
-## 構成フォント
+詳細に関しては、リポジトリ内にある各フォント毎のLICENSEファイルを確認してください。
 
 - Tektur (Modified as Tektur-KSM)
     - Copyright 2023 The Tektur Project Authors
