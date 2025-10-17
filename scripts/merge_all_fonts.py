@@ -64,7 +64,13 @@ def create_fontforge_script(font_list, output_path, script_path, font_name):
 	script_content = f'#!/usr/bin/env fontforge\nOpen("{font_list[0]}")\n'
 	for font in font_list[1:]:
 		script_content += f'MergeFonts("{font}")\n'
+
 	script_content += f'SetFontNames("{font_name}", "{font_name}", "{font_name}")\n'
+	script_content += f'SetTTFName(0x409, 16, "{font_name}")\n'  # nameID 16: Typographic Family name (Windows)
+	script_content += f'SetTTFName(0x409, 17, "Medium")\n'       # nameID 17: Typographic Subfamily name (Windows)
+	script_content += f'SetTTFName(0x0, 16, "{font_name}")\n'    # nameID 16: Typographic Family name (Mac)
+	script_content += f'SetTTFName(0x0, 17, "Medium")\n'         # nameID 17: Typographic Subfamily name (Mac)
+
 	script_content += f'Generate("{output_path}")\n'
 
 	with open(script_path, 'w') as f:
