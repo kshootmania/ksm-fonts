@@ -7,6 +7,7 @@ Merges Tektur, Corporate Logo, and Noto Sans fonts for each language.
 import sys
 import subprocess
 from pathlib import Path
+from fontTools.ttLib import TTFont
 
 SCRIPT_DIR = Path(__file__).parent
 PROJECT_ROOT = SCRIPT_DIR.parent
@@ -72,6 +73,57 @@ def check_fontforge():
 		return False
 
 
+def copy_kana_glyphs(source_font_path, target_font_path):
+	"""Copy hiragana and katakana glyphs from source font to target font."""
+	source = TTFont(source_font_path)
+	target = TTFont(target_font_path)
+
+	# Unicode ranges for hiragana and katakana
+	kana_ranges = [
+		(0x3040, 0x309F),  # Hiragana
+		(0x30A0, 0x30FF),  # Katakana
+		(0x31F0, 0x31FF),  # Katakana Phonetic Extensions
+	]
+
+	source_cmap = source.getBestCmap()
+	target_cmap = target.getBestCmap()
+
+	copied_count = 0
+	for start, end in kana_ranges:
+		for codepoint in range(start, end + 1):
+			if codepoint in source_cmap and codepoint in target_cmap:
+				source_glyph_name = source_cmap[codepoint]
+				target_glyph_name = target_cmap[codepoint]
+				if source_glyph_name in source['glyf'] and target_glyph_name in target['glyf']:
+					# Copy glyph data to target's glyph name
+					target['glyf'][target_glyph_name] = source['glyf'][source_glyph_name]
+					# Copy horizontal metrics
+					if source_glyph_name in source['hmtx'].metrics:
+						target['hmtx'].metrics[target_glyph_name] = source['hmtx'].metrics[source_glyph_name]
+					copied_count += 1
+
+	target.save(target_font_path)
+	source.close()
+	target.close()
+	print(f"  Copied {copied_count} kana glyphs")
+
+
+def restore_kerning(source_font_path, target_font_path):
+	"""Restore GPOS (kerning) table from source font to target font."""
+	source = TTFont(source_font_path)
+	target = TTFont(target_font_path)
+
+	if 'GPOS' in source:
+		target['GPOS'] = source['GPOS']
+
+	if 'kern' in source:
+		target['kern'] = source['kern']
+
+	target.save(target_font_path)
+	source.close()
+	target.close()
+
+
 def create_fontforge_script(font_list, output_path, script_path, font_name):
 	script_content = f'#!/usr/bin/env fontforge\nOpen("{font_list[0]}")\n'
 	for font in font_list[1:]:
@@ -89,7 +141,7 @@ def create_fontforge_script(font_list, output_path, script_path, font_name):
 		f.write(script_content)
 
 
-def merge_fonts(font_list, output_path, description, font_name):
+def merge_fonts(font_list, output_path, description, font_name, kana_source=None):
 	print(f"\n{'='*60}")
 	print(f"Merging: {description}")
 	print(f"{'='*60}")
@@ -122,6 +174,11 @@ def merge_fonts(font_list, output_path, description, font_name):
 		script_path.unlink()
 
 		if result.returncode == 0:
+			if kana_source:
+				print("Copying kana glyphs...")
+				copy_kana_glyphs(kana_source, output_path)
+			print("Restoring kerning from Tektur...")
+			restore_kerning(font_list[0], output_path)
 			print(f"✓ Complete: {output_path}")
 			if output_path.exists():
 				size_mb = output_path.stat().st_size / (1024 * 1024)
@@ -166,6 +223,9 @@ def main():
 	):
 		success_count += 1
 
+	# Use JA font as kana source (contains Corporate Logo kana as TTF glyphs)
+	ja_font_path = OUTPUT_DIR / "KSM-JA-Medium.ttf"
+
 	total_count += 1
 	if merge_fonts(
 		[TEKTUR_FONT,
@@ -177,7 +237,8 @@ def main():
 		 NOTO_SANS_HEBREW_FONT, NOTO_SANS_CHEROKEE_FONT],
 		OUTPUT_DIR / "KSM-SC-Medium.ttf",
 		"Simplified Chinese",
-		"KSM-System-SC"
+		"KSM-System-SC",
+		kana_source=ja_font_path
 	):
 		success_count += 1
 
@@ -192,7 +253,8 @@ def main():
 		 NOTO_SANS_HEBREW_FONT, NOTO_SANS_CHEROKEE_FONT],
 		OUTPUT_DIR / "KSM-TC-Medium.ttf",
 		"Traditional Chinese",
-		"KSM-System-TC"
+		"KSM-System-TC",
+		kana_source=ja_font_path
 	):
 		success_count += 1
 
