@@ -15,18 +15,30 @@ OUTPUT_DIR = PROJECT_ROOT
 
 TEKTUR_FONT = FONT_DIR / "tektur-ksm/Tektur-KSM-Medium.ttf"
 CORPORATE_LOGO_FONT = FONT_DIR / "corporate-logo/Corporate-Logo-Medium-ver3.otf"
+NOTO_SANS_FONT = FONT_DIR / "noto-sans/NotoSans-Medium.ttf"
+NOTO_SANS_MATH_FONT = FONT_DIR / "noto-sans/NotoSansMath-Regular.ttf"
+NOTO_SANS_SYMBOLS_FONT = FONT_DIR / "noto-sans/NotoSansSymbols-Regular.ttf"
+NOTO_SANS_SYMBOLS2_FONT = FONT_DIR / "noto-sans/NotoSansSymbols2-Regular.ttf"
+NOTO_MUSIC_FONT = FONT_DIR / "noto-sans/NotoMusic-Regular.ttf"
+NOTO_SANS_ARABIC_FONT = FONT_DIR / "noto-sans/NotoSansArabic-Medium.ttf"
+NOTO_SANS_THAI_FONT = FONT_DIR / "noto-sans/NotoSansThai-Medium.ttf"
+NOTO_SANS_HEBREW_FONT = FONT_DIR / "noto-sans/NotoSansHebrew-Medium.ttf"
+NOTO_SANS_CHEROKEE_FONT = FONT_DIR / "noto-sans/NotoSansCherokee-Medium.ttf"
+NOTO_SANS_JP_FONT = FONT_DIR / "noto-sans-jp/NotoSansJP-Medium.ttf"
 NOTO_SANS_KR_FONT = FONT_DIR / "noto-sans-kr/NotoSansKR-Medium.ttf"
-NOTO_SANS_CJK_JP_FONT = FONT_DIR / "noto-sans-jp/NotoSansCJKjp-Medium.otf"
-NOTO_SANS_CJK_KR_FONT = FONT_DIR / "noto-sans-kr/NotoSansCJKkr-Medium.otf"
-NOTO_SANS_CJK_SC_FONT = FONT_DIR / "noto-sans-sc/NotoSansCJKsc-Medium.otf"
-NOTO_SANS_CJK_TC_FONT = FONT_DIR / "noto-sans-tc/NotoSansCJKtc-Medium.otf"
+NOTO_SANS_SC_FONT = FONT_DIR / "noto-sans-sc/NotoSansSC-Medium.ttf"
+NOTO_SANS_TC_FONT = FONT_DIR / "noto-sans-tc/NotoSansTC-Medium.ttf"
 
 
 def check_fonts_exist():
 	fonts = [
-		TEKTUR_FONT, CORPORATE_LOGO_FONT, NOTO_SANS_KR_FONT,
-		NOTO_SANS_CJK_JP_FONT, NOTO_SANS_CJK_KR_FONT,
-		NOTO_SANS_CJK_SC_FONT, NOTO_SANS_CJK_TC_FONT,
+		TEKTUR_FONT, CORPORATE_LOGO_FONT,
+		NOTO_SANS_FONT, NOTO_SANS_MATH_FONT,
+		NOTO_SANS_SYMBOLS_FONT, NOTO_SANS_SYMBOLS2_FONT, NOTO_MUSIC_FONT,
+		NOTO_SANS_ARABIC_FONT, NOTO_SANS_THAI_FONT,
+		NOTO_SANS_HEBREW_FONT, NOTO_SANS_CHEROKEE_FONT,
+		NOTO_SANS_JP_FONT, NOTO_SANS_KR_FONT,
+		NOTO_SANS_SC_FONT, NOTO_SANS_TC_FONT,
 	]
 	missing = [f for f in fonts if not f.exists()]
 
@@ -143,25 +155,26 @@ def main():
 
 	total_count += 1
 	if merge_fonts(
-		[TEKTUR_FONT, CORPORATE_LOGO_FONT, NOTO_SANS_CJK_JP_FONT],
+		[TEKTUR_FONT, CORPORATE_LOGO_FONT,
+		 NOTO_SANS_JP_FONT, NOTO_SANS_KR_FONT, NOTO_SANS_SC_FONT, NOTO_SANS_TC_FONT,
+		 NOTO_SANS_FONT, NOTO_SANS_MATH_FONT, NOTO_SANS_SYMBOLS_FONT, NOTO_SANS_SYMBOLS2_FONT,
+		 NOTO_MUSIC_FONT, NOTO_SANS_ARABIC_FONT, NOTO_SANS_THAI_FONT,
+		 NOTO_SANS_HEBREW_FONT, NOTO_SANS_CHEROKEE_FONT],
 		OUTPUT_DIR / "KSM-JA-Medium.ttf",
-		"Japanese",
+		"Japanese/Korean",
 		"KSM-System-JA"
 	):
 		success_count += 1
 
 	total_count += 1
 	if merge_fonts(
-		[TEKTUR_FONT, CORPORATE_LOGO_FONT, NOTO_SANS_KR_FONT, NOTO_SANS_CJK_JP_FONT],
-		OUTPUT_DIR / "KSM-KR-Medium.ttf",
-		"Korean",
-		"KSM-System-KR"
-	):
-		success_count += 1
-
-	total_count += 1
-	if merge_fonts(
-		[TEKTUR_FONT, CORPORATE_LOGO_FONT, NOTO_SANS_CJK_SC_FONT],
+		[TEKTUR_FONT,
+		 NOTO_SANS_SC_FONT, NOTO_SANS_TC_FONT,
+		 CORPORATE_LOGO_FONT,
+		 NOTO_SANS_JP_FONT, NOTO_SANS_KR_FONT,
+		 NOTO_SANS_FONT, NOTO_SANS_MATH_FONT, NOTO_SANS_SYMBOLS_FONT, NOTO_SANS_SYMBOLS2_FONT,
+		 NOTO_MUSIC_FONT, NOTO_SANS_ARABIC_FONT, NOTO_SANS_THAI_FONT,
+		 NOTO_SANS_HEBREW_FONT, NOTO_SANS_CHEROKEE_FONT],
 		OUTPUT_DIR / "KSM-SC-Medium.ttf",
 		"Simplified Chinese",
 		"KSM-System-SC"
@@ -170,7 +183,13 @@ def main():
 
 	total_count += 1
 	if merge_fonts(
-		[TEKTUR_FONT, CORPORATE_LOGO_FONT, NOTO_SANS_CJK_TC_FONT],
+		[TEKTUR_FONT,
+		 NOTO_SANS_TC_FONT, NOTO_SANS_SC_FONT,
+		 CORPORATE_LOGO_FONT,
+		 NOTO_SANS_JP_FONT, NOTO_SANS_KR_FONT,
+		 NOTO_SANS_FONT, NOTO_SANS_MATH_FONT, NOTO_SANS_SYMBOLS_FONT, NOTO_SANS_SYMBOLS2_FONT,
+		 NOTO_MUSIC_FONT, NOTO_SANS_ARABIC_FONT, NOTO_SANS_THAI_FONT,
+		 NOTO_SANS_HEBREW_FONT, NOTO_SANS_CHEROKEE_FONT],
 		OUTPUT_DIR / "KSM-TC-Medium.ttf",
 		"Traditional Chinese",
 		"KSM-System-TC"
@@ -183,8 +202,7 @@ def main():
 
 	if success_count == total_count:
 		print("\nGenerated fonts:")
-		print("  - KSM-JA-Medium.ttf (Japanese)")
-		print("  - KSM-KR-Medium.ttf (Korean)")
+		print("  - KSM-JA-Medium.ttf (Japanese/Korean)")
 		print("  - KSM-SC-Medium.ttf (Simplified Chinese)")
 		print("  - KSM-TC-Medium.ttf (Traditional Chinese)")
 	else:
