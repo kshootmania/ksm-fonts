@@ -2,20 +2,20 @@
 
 K-Shoot MANIA v2用のシステムフォント「KSM-System」とフォント統合用スクリプトです。
 
-以下の3つのフォントを統合したフォントです。
+複数のフォントを統合し、各言語向けに最適化されたグリフ優先順位で構成されています。
 
-- **英数字・記号**: Tektur(改変版)
-- **日本語**: コーポレート・ロゴ ver3／源ノ角ゴシック
-- **それ以外のグリフ**: Noto Sans CJK
+- **英数字・記号**: Tektur (改変版)
+- **日本語**: コーポレート・ロゴ ver3
+- **CJK**: Noto Sans JP / KR / SC / TC
+- **その他**: Noto Sans, Noto Sans Math, Noto Sans Symbols, Noto Music, Arabic, Thai, Hebrew, Cherokee
 
 ## フォント
 
-| File Name | Language |
-|-----------|---------|
-| KSM-JA-Medium.ttf | Japanese |
-| KSM-KR-Medium.ttf | Korean |
-| KSM-SC-Medium.ttf | Simplified Chinese |
-| KSM-TC-Medium.ttf | Traditional Chinese |
+| File Name | Language | Glyph Priority |
+|-----------|----------|----------------|
+| KSM-JA-Medium.ttf | Japanese | JP → KR → SC → TC |
+| KSM-SC-Medium.ttf | Simplified Chinese | SC → TC → JP → KR |
+| KSM-TC-Medium.ttf | Traditional Chinese | TC → SC → JP → KR |
 
 ## ライセンス
 
@@ -31,5 +31,5 @@ K-Shoot MANIA v2用のシステムフォント「KSM-System」とフォント統
     - Copyright LOGOTYPE.JP
     - Based on Source Han Sans (Adobe)
 
-- Noto Sans CJK (JP, KR, SC, TC)
+- Noto Sans (JP, KR, SC, TC, Math, Symbols, Music, Arabic, Thai, Hebrew, Cherokee)
     - Copyright Google Inc. and Adobe Inc.
